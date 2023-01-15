@@ -1,14 +1,4 @@
-@php
-	$data_pass = 'nghia123';
-	
-	$hash= bcrypt($data_pass);
-	echo $hash;
-	if( Hash::check($data_pass,'$2y$10$RPDY429qkPIOm27HxeSjbehx6a2OluZygEoPh7AEoDF04b7uBq5Ou')==true){
-		echo 'đúng';
-	}else{
-		echo 'sai';
-	};
-@endphp
+
 <!DOCTYPE html>
 <head>
 <title>Login</title>
@@ -42,7 +32,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		Session()->put('message',null);
     }
     @endphp
-		<form action="admin-dashboard" method="post">
+		<form action="{{url('/admin-dashboard')}}" method="post">
             @csrf
 			<input type="email" class="ggg" name="admin_email" placeholder="E-MAIL" required="">
 			<input type="password" class="ggg" name="admin_password" placeholder="PASSWORD" required="">

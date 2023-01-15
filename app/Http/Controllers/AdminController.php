@@ -25,10 +25,11 @@ class AdminController extends Controller
     public function show_dashboard()
     {
         $this->AuthLogin();
-        return view('dashboard');
+        return view('admin.dashboard');
     }
     public function dashboard(Request $request)
     {
+        $this->AuthLogin();
         $data = $request->all();
         $admin_email = $data['admin_email'];
         $admin_password = $data['admin_password'];
@@ -39,20 +40,18 @@ class AdminController extends Controller
                 Session()->put('admin_id', $login->admin_id);
                 return Redirect::to('/dashboard');
             } else {
-                Session()->put('message', 'Mật khẩu hoặc tài khoản bị sai.Làm ơn nhập lại');
+                Session()->put('message', 'Mật khẩu hoặc tài khoản bị sai!.Làm ơn nhập lại!');
                 return Redirect::to('/login');
             }
         } else {
-            Session()->put('message', 'Mật khẩu hoặc tài khoản bị sai.Làm ơn nhập lại');
+            Session()->put('message', 'Mật khẩu hoặc tài khoản bị sai!.Làm ơn nhập lại!');
             return Redirect::to('/login');
         }
-        // if ($login) {
-        //     Session()->put('admin_name', $login->admin_name);
-        //     Session()->put('admin_id', $login->admin_id);
-        //     return Redirect::to('/dashboard');
-        // } else {
-        //     Session()->put('message', 'Mật khẩu hoặc tài khoản bị sai.Làm ơn nhập lại');
-        //     return Redirect::to('/login');
-        // }
+    }
+    public function logout()
+    {
+        Session()->put('admin_name', null);
+        Session()->put('admin_id', null);
+        return Redirect::to('/login');
     }
 }
