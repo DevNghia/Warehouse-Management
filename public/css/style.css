@@ -55,6 +55,10 @@ label {
 body a:hover {
     text-decoration: none;
 }
+label.error {
+    color: red;
+    font-size: smaller;
+}
 /*sidebar navigation*/
 #sidebar {
     width: 240px;
@@ -2565,6 +2569,14 @@ input.ggg {
 }
 span.tex-aler {
     color: #ff0000;
+    width: 88%;
+}
+span.tex-alers {
+    color: rgb(19, 192, 19);
+    width: 88%;
+}
+span.error {
+    color: red;
     width: 88%;
 }
 .w3layouts-main h6 {

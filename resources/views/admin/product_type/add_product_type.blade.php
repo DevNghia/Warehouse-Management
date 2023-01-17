@@ -6,8 +6,15 @@
                             Thêm mới loại sản phẩm
                         </header>
                         <div class="panel-body">
+                               @php
+                                 $error = Session()->get('warrning');
+                                if($error){
+                                echo '<span class="error">'.$error.'</span>';
+                                    Session()->put('error',null);
+                                }
+                                @endphp 
                             <div class="position-center">
-                                <form action="{{url('/product-type')}}" method="post">
+                                <form action="{{url('/product-type')}}" id="formValidation" method="post" enctype="multipart/form-data">
                                     @csrf
                                 <div class="form-group">
                                     <label>Tên loại sản phẩm</label>

@@ -7,16 +7,29 @@
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
-                
+            @php
+        $message = Session()->get('message');
+          $error = Session()->get('error');
+	if($message){
+		echo '<span class="tex-alers">'.$message.'</span>';
+		Session()->put('message',null);
+    }
+    if($error){
+      echo '<span class="error">'.$error.'</span>';
+		Session()->put('error',null);
+    }
+    @endphp    
       </div>
       <div class="col-sm-4">
+       
       </div>
       <div class="col-sm-3">
         <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Search">
+          <form action="" method="get">
+          <input type="text" class="input-sm form-control" name="keyword_submit" placeholder="Search">
           <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
+            <button class="btn btn-sm btn-default" type="submit">Tìm kiếm</button>
+          </span></form>
         </div>
       </div>
     </div>
@@ -34,20 +47,26 @@
           </tr>
         </thead>
         <tbody>
+          @php
+              $i=1;
+          @endphp
           @foreach ($all_product_type as $item)
               <tr>
-           <td>1</td>
+           <td>{{$i++}}</td>
             <td>{{$item->product_type_id}}</td>
             <td><span class="text-ellipsis">{{$item->product_type_name}}</span></td>
             <td><span class="text-ellipsis">Nhà cung cấp</span></td>
              <td><span class="text-ellipsis">{{$item->created_at}}</span></td>
               <td><span class="text-ellipsis">{{$item->updated_at}}</span></td>
             <td>
-              <a href="{{url('/edit-product-type')}}/{{$item->product_type_id}}" class="active" ui-toggle-class=""><i class="fa fa-edit text-success text-active"></i><i class="fa fa-times text-danger text"></i></a>
+              <a href="{{url('/edit-product-type')}}/{{$item->product_type_id}}" class="active" ui-toggle-class=""><i class="fa fa-edit text-success text-active"></i></a>
+               <a href="{{url('/delete-product-type')}}/{{$item->product_type_id}}" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></i></a>
+              
             </td>
+          
           </tr>
           @endforeach
-          
+            
           
         </tbody>
       </table>
@@ -55,17 +74,10 @@
     <footer class="panel-footer">
       <div class="row">
         
-        <div class="col-sm-5 text-center">
-          <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
-        </div>
-        <div class="col-sm-7 text-right text-center-xs">                
+       
+        <div class="col-sm-12 text-right text-center-xs">                
           <ul class="pagination pagination-sm m-t-none m-b-none">
-            <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
-            <li><a href="">1</a></li>
-            <li><a href="">2</a></li>
-            <li><a href="">3</a></li>
-            <li><a href="">4</a></li>
-            <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
+            <li>{{$all_product_type->links()}}</li>
           </ul>
         </div>
       </div>

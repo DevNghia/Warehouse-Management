@@ -29,7 +29,7 @@ class AdminController extends Controller
     }
     public function dashboard(Request $request)
     {
-        $this->AuthLogin();
+
         $data = $request->all();
         $admin_email = $data['admin_email'];
         $admin_password = $data['admin_password'];
