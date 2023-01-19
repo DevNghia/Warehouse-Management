@@ -28,3 +28,10 @@ Route::get('/edit-product-type/{product_type_id}', 'App\Http\Controllers\Product
 Route::post('/update-product-type/{product_type_id}', 'App\Http\Controllers\ProductTypeController@update');
 Route::get('/search-product-type', 'App\Http\Controllers\ProductTypeController@search');
 Route::get('/delete-product-type/{product_type_id}', 'App\Http\Controllers\ProductTypeController@destroy');
+
+// Calculation
+Route::get('/calculations/show', 'App\Http\Controllers\CalculationController@show');
+Route::get('/calculations/delete/{calculation_id}','App\Http\Controllers\CalculationController@delete')
+Route::get('/calculations/update/{calculation_id}','App\Http\Controllers\CalculationController@update');
+Route::get('/calculations/store','App\Http\Controllers\CalculationController@store');
+Route::get('/calculations/{calculation_id}','App\Http\Controllers\CalculationController@index');

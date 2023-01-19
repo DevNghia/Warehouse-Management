@@ -12,9 +12,11 @@ class CalculationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($calculation_id)
     {
-        //
+        // if err ?? 
+        $calculation = Calculation::find($calculation_id);
+        return view('admin.calculations.calculation')->with(compact('calculation'));
     }
 
     /**
@@ -25,6 +27,8 @@ class CalculationController extends Controller
     public function create()
     {
         //
+        // ?? create and store
+        return view('admin.calculations.add_calculations');
     }
 
     /**
@@ -36,6 +40,20 @@ class CalculationController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->all();
+
+        $calculation = new Calculation;
+        // id ??
+        $calculation->calculator_name = $data['calculation_name'];
+        $calculation->created_at = now();
+        $check = Calculation::where('calculation_name', $data['calculation_name'])->first();
+        if ($check) {
+            Session()->flash('error', 'calculation is exist');
+            return Redirect::back();
+        }
+        $calculation->save();
+        Session()->put('message', 'Store successfully');
+        return Redirect::to('/calculations/show');
     }
 
     /**
@@ -47,6 +65,7 @@ class CalculationController extends Controller
     public function show(Calculation $calculation)
     {
         //
+
     }
 
     /**
@@ -58,6 +77,7 @@ class CalculationController extends Controller
     public function edit(Calculation $calculation)
     {
         //
+        // ?? edit ?? update
     }
 
     /**
@@ -67,9 +87,14 @@ class CalculationController extends Controller
      * @param  \App\Models\Calculation  $calculation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Calculation $calculation)
+    public function update(Request $request, $calculation_id)
     {
         //
+        $calculation = Calculation::find($calculation_id);
+        $calculation->updated_at = now();
+        $calculation->update($request->all());
+        Session()->put('message', 'update successfully');
+        return Redirect::to('/calculations/show');
     }
 
     /**
@@ -78,8 +103,12 @@ class CalculationController extends Controller
      * @param  \App\Models\Calculation  $calculation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Calculation $calculation)
+    public function destroy($calculation_id)
     {
-        //
+        // if err ??
+        $calculation = Calculation::find($calculation_id);
+        $calculation->delete();
+        Session()->put('message', 'Delete successfully');
+        return Redirect::to('/calculations/show');
     }
 }
