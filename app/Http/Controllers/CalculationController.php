@@ -65,7 +65,7 @@ class CalculationController extends Controller
     public function show(Calculation $calculation)
     {
         //
-
+        // different of show and index function??
     }
 
     /**
