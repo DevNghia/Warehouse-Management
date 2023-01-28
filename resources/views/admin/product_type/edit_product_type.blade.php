@@ -7,7 +7,6 @@
                         </header>
                         <div class="panel-body">
                             <div class="position-center">
-                                 <span>ádads</span>
                                 <form action="{{url('/update-product-type')}}/{{$product_type->product_type_id}}" id="formValidation" method="post" enctype="multipart/form-data">
                                     @csrf
                                 <div class="form-group">

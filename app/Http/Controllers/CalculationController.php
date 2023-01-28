@@ -2,84 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Redirect;
 use App\Models\Calculation;
 use Illuminate\Http\Request;
 
 class CalculationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function show_all(Request $request)
     {
-        //
+
+        AuthLogin();
+        $key = $request->keyword_submit;
+        $all_calculation = Calculation::paginate(4);
+        if ($key = $request->keyword_submit) {
+            $all_calculation = Calculation::where('calculation_name', 'like', '%' . $key . '%')->paginate(4);
+        }
+
+
+        return view('admin.calculation.all')->with(compact('all_calculation'));
+    }
+    public function add_calculation()
+    {
+        AuthLogin();
+        return view('admin.calculation.add');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $calculation = new Calculation;
+        $calculation->calculation_name = $data['calculation_name'];
+        $calculation->created_at = now();
+        $check = Calculation::where('calculation_name', $data['calculation_name'])->first();
+        if ($check) {
+            session()->flash('warrning', 'Đơn vị tính đã tồn tại!');
+            return Redirect::back();
+        } else {
+            $calculation->save();
+            Session()->put('message', 'Thêm đơn vị tính thành công!');
+            return Redirect::to('/show-calculation');
+        }
+
+        // $manager_product_type = view('admin.all_category_product')->with('all_category_product', $all_category_product);
+        // return view('admin_layout')->with('admin.all_category_product', $manager_category_product);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Calculation  $calculation
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Calculation $calculation)
+    public function edit($calculation_id)
     {
-        //
+        $calculation = Calculation::where('calculation_id', $calculation_id)->first();
+        return view('admin.calculation.edit')->with(compact('calculation'));
+    }
+    public function update(Request $request, $calculation_id)
+    {
+        $calculation = Calculation::find($calculation_id);
+        $calculation->updated_at = now();
+        $calculation->update($request->all());
+        Session()->put('message', 'Cập nhật đơn vị tính thành công!');
+        return Redirect::to('/show-calculation');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Calculation  $calculation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Calculation $calculation)
+    public function destroy($calculation_id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Calculation  $calculation
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Calculation $calculation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Calculation  $calculation
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Calculation $calculation)
-    {
-        //
+        $calculation = Calculation::find($calculation_id);
+        $calculation->delete();
+        Session()->put('error', 'Xóa đơn vị tính thành công!');
+        return Redirect::to('/show-calculation');
     }
 }

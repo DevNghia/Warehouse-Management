@@ -9,22 +9,14 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function AuthLogin()
-    {
-        $admin_id = Session()->get('admin_id');
-        if ($admin_id) {
-            return Redirect::to('/dashboard');
-        } else {
-            return Redirect::to('/login')->send();
-        }
-    }
+
     public function index()
     {
         return view('login');
     }
     public function show_dashboard()
     {
-        $this->AuthLogin();
+        AuthLogin();
         return view('admin.dashboard');
     }
     public function dashboard(Request $request)

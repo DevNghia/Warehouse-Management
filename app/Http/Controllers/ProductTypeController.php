@@ -4,30 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Redirect;
 use App\Models\ProductType;
-use Illuminate\Console\View\Components\Alert;
+
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\BinaryOp\Equal;
+
 
 class ProductTypeController extends Controller
 {
 
-    public function AuthLogin()
-    {
-        $admin_id = Session()->get('admin_id');
-        if ($admin_id) {
-            return Redirect::to('/dashboard');
-        } else {
-            return Redirect::to('/login')->send();
-        }
-    }
+
     public function show_all(Request $request)
     {
-        $this->AuthLogin();
+
+        AuthLogin();
         $key = $request->keyword_submit;
         $all_product_type = ProductType::paginate(4);
         if ($key = $request->keyword_submit) {
             $all_product_type = ProductType::where('product_type_name', 'like', '%' . $key . '%')->paginate(4);
-            $all_product_type;
         }
 
 
@@ -35,7 +27,7 @@ class ProductTypeController extends Controller
     }
     public function add_product_type()
     {
-        $this->AuthLogin();
+        AuthLogin();
         return view('admin.product_type.add_product_type');
     }
 
