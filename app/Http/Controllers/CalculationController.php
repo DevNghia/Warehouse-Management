@@ -44,9 +44,6 @@ class CalculationController extends Controller
             Session()->put('message', 'Thêm đơn vị tính thành công!');
             return Redirect::to('/show-calculation');
         }
-
-        // $manager_product_type = view('admin.all_category_product')->with('all_category_product', $all_category_product);
-        // return view('admin_layout')->with('admin.all_category_product', $manager_category_product);
     }
 
     public function edit($calculation_id)

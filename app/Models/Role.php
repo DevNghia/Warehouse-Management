@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Supplier extends Model
+class Role extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-        'supplier_name', 'supplier_email', 'supplier_phone', 'supplier_website'
+        'role_name', 'role_title'
     ];
-    protected $primaryKey = "supplier_id";
-    protected $table = 'suppliers';
+    protected $primaryKey = "role_id";
+    protected $table = 'roles';
 }

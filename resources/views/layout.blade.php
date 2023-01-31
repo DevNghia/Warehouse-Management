@@ -292,8 +292,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Nhà cung cấp</span>
                     </a>
                     <ul class="sub">
-						<li><a href="">Danh sách nhà cung cấp</a></li>
-						<li><a href="">Thêm mới nhà cung cấp</a></li>
+						<li><a href="{{url('/show-supplier')}}">Danh sách nhà cung cấp</a></li>
+						<li><a href="{{url('/add-supplier')}}">Thêm mới nhà cung cấp</a></li>
                     </ul>
                 </li>
                    <li class="sub-menu">
@@ -328,7 +328,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="">Danh sách phiếu xuất</a></li>
                     </ul>
                 </li>
-           
+            <li class="sub-menu">
+                    <a href="{{url('/show-all-account')}}">
+                        <i class="fa fa-book"></i>
+                        <span>Quản lý tài khoản người dùng</span>
+                    </a>
+                    
+                </li>
          
             </ul>            </div>
         <!-- sidebar menu end-->
@@ -448,6 +454,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js')}}"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script> 
 <script src="{{asset('js/validation.js')}}"></script>
+<script src="{{asset('js/sweetalert.all.js')}}"></script>
+
+@include('sweetalert::alert')
 	<!-- //calendar -->
 </body>
 </html>

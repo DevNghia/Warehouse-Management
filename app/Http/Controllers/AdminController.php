@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Admin;
 use Illuminate\Http\Request;
@@ -13,6 +14,42 @@ class AdminController extends Controller
     public function index()
     {
         return view('login');
+    }
+    public function show_all(Request $request)
+    {
+
+        AuthLogin();
+        $key = $request->keyword_submit;
+        $all_admin = Admin::with('roles')->paginate(4);
+
+        if ($key = $request->keyword_submit) {
+            $all_admin = Admin::where('admin_name', 'like', '%' . $key . '%')->paginate(4);
+        }
+
+
+        return view('admin.account.all')->with(compact('all_admin'));
+    }
+    public function add_account()
+    {
+        AuthLogin();
+        return view('admin.account.add');
+    }
+    public function store(Request $request)
+    {
+        $data = $request->all();
+
+        $admin = new Admin();
+        $admin->admin_name = $data['admin_name'];
+        $admin->created_at = now();
+        $check = admin::where('admin_name', $data['admin_name'])->first();
+        if ($check) {
+            session()->flash('warrning', 'Đơn vị tính đã tồn tại!');
+            return Redirect::back();
+        } else {
+            $admin->save();
+            Session()->put('message', 'Thêm đơn vị tính thành công!');
+            return Redirect::to('/show-admin');
+        }
     }
     public function show_dashboard()
     {

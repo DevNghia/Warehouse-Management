@@ -1,4 +1,5 @@
 @extends('layout')
+@include('sweetalert::alert')
 @section('admin_content')
 		<div class="market-updates">
 			<div class="col-md-3 market-update-gd">
@@ -79,5 +80,6 @@
 				</div>
 			</div>
 		</div>
+		
         @endsection
 		
