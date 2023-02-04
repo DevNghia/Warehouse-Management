@@ -14,23 +14,36 @@
                                 }
                                 @endphp 
                             <div class="position-center">
-                                <form action="{{url('/calculation')}}" id="formValidation" method="post" enctype="multipart/form-data">
+                                <form action="{{url('/admin')}}" id="formValidation" method="post" enctype="multipart/form-data">
                                     @csrf
                                 <div class="form-group">
                                     <label>Tên tài khoản</label>
-                                    <input type="text" class="form-control" name="calculation_name" >
+                                    <input type="text" class="form-control" name="admin_name" >
                                 </div>
                                  <div class="form-group">
                                     <label>Email</label>
-                                    <input type="text" class="form-control" name="calculation_name" >
+                                    <input type="text" class="form-control" name="admin_email" >
                                 </div>
                                 <div class="form-group">
                                     <label>Số điện thoại</label>
-                                    <input type="text" class="form-control" name="calculation_name" >
+                                    <input type="text" class="form-control" name="admin_phone" >
                                 </div>
                                  <div class="form-group">
                                     <label>mật khẩu</label>
-                                    <input type="text" class="form-control" name="calculation_name" >
+                                    <input type="text" id="admin_password" class="form-control" name="admin_password" >
+                                </div>
+                                <div class="form-group">
+                                    <label>nhập lại mật khẩu</label>
+                                    <input type="text" class="form-control" name="password_confirmation" >
+                                </div>
+                                <div class="form-group">
+                                    <label>Quyền</label>
+                                    <select class="form-control m-bot15" name="role_id">
+                                        @foreach ($roles as $item)
+                                             <option value="{{$item->role_id}}">{{$item->role_title}}</option>
+                                        @endforeach
+                           
+                            </select>
                                 </div>
                                 <button type="submit" class="btn btn-info">Thêm mới</button>
                             </form>

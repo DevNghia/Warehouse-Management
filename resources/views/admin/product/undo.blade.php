@@ -3,7 +3,7 @@
         <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-     Loại sản phẩm
+     Sản phẩm đã xóa
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
@@ -37,30 +37,43 @@
       <table class="table table-striped b-t b-light">
         <thead>
           <tr>
-            <th>STT</th>
             <th>Mã loại sản phẩm</th>
+            <th>Tên</th>
+            <th>Ảnh</th>
             <th>Loại sản phẩm</th>
             <th>Nhà cung cấp</th>
-            <th>Ngày Tạo</th>
-            <th>Ngày cập nhật</th>
+            <th>Người tạo</th>
+            <th>Giá nhập</th>
+            <th>Giá bán lẻ</th>
+            <th>Giá buôn</th>
+             <th>Trạng thái</th>
             <th style="width:30px;"></th>
           </tr>
         </thead>
         <tbody>
-          @php
-              $i=1;
-          @endphp
-          @foreach ($all_product_type as $item)
+          @foreach ($all_product as $item)
               <tr>
-           <td>{{$i++}}</td>
-            <td>{{$item->product_type_id}}</td>
-            <td><span class="text-ellipsis">{{$item->product_type_name}}</span></td>
-            <td><span class="text-ellipsis">Nhà cung cấp</span></td>
+            <td>{{$item->product_id}}</td>
+            <td><span class="text-ellipsis">{{$item->product_name}}</span></td>
+            <td><img src="/upload/product/{{$item->product_image}}"width="50px" alt=""></td>
+            <td><span class="text-ellipsis">{{$item->product_types->product_type_name}}</span></td>
+            <td><span class="text-ellipsis">{{$item->calculations->calculation_name}}</span></td>
+            <td><span class="text-ellipsis">{{$item->admins->admin_name}}</span></td>
+            <td><span class="text-ellipsis">{{$item->import_price}} vnđ</span></td> 
+            <td><span class="text-ellipsis">{{$item->retail_price}} vnđ</span></td>
+             <td><span class="text-ellipsis">{{$item->wholesale_price}} vnđ</span></td>
+               <td><span class="text-ellipsis">
+                @if ($item->status==0)
+                     <a href="/unactive-product/{{$item->product_id}}" class="fa fa-thumbs-down"></a>
+                @else
+                     <a href="/active-product/{{$item->product_id}}" class="fa fa-thumbs-up"></a>
+                @endif  
+              </span></td>
              <td><span class="text-ellipsis">{{$item->created_at}}</span></td>
               <td><span class="text-ellipsis">{{$item->updated_at}}</span></td>
             <td>
-              <a href="{{url('/edit-product-type')}}/{{$item->product_type_id}}" class="active" ui-toggle-class=""><i class="fa fa-edit text-success text-active"></i></a>
-               <a class="active"  ui-toggle-class=""><i data-id_product_type="{{$item->product_type_id}}" class="fa fa-times text-danger text"></i></i></a>
+              <a href="{{url('/edit-product')}}/{{$item->product_id}}" class="active" ui-toggle-class=""><i class="fa fa-edit text-success text-active"></i></a>
+               <a class="active"  ui-toggle-class=""><i data-id_product="{{$item->product_id}}" class="fa fa-times text-danger text"></i></i></a>
              
             </td>
           
@@ -77,7 +90,7 @@
        
         <div class="col-sm-12 text-right text-center-xs">                
           <ul class="pagination pagination-sm m-t-none m-b-none">
-            <li>{{$all_product_type->links()}}</li>
+            <li>{{$all_product->links()}}</li>
           </ul>
         </div>
       </div>

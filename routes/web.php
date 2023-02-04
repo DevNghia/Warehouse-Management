@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use RealRashid\SweetAlert\Facades\Alert;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +13,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 */
 
 Route::get('/', function () {
-    Alert::success('Success Title', 'Success Message');
+
     return view('login');
 });
 Route::get('/login', 'App\Http\Controllers\AdminController@index');
@@ -52,4 +51,13 @@ Route::group(['middleware' => 'roles'], function () {
     //account
     Route::get('/show-all-account', 'App\Http\Controllers\AdminController@show_all');
     Route::get('/add-account', 'App\Http\Controllers\AdminController@add_account');
+    Route::post('/admin', 'App\Http\Controllers\AdminController@store');
 });
+//product
+Route::get('/show-product', 'App\Http\Controllers\ProductController@show_all');
+Route::get('/add-product', 'App\Http\Controllers\ProductController@add_product');
+Route::post('/product', 'App\Http\Controllers\ProductController@store');
+Route::get('/edit-product/{product_id}', 'App\Http\Controllers\ProductController@edit');
+Route::post('/update-product/{product_id}', 'App\Http\Controllers\ProductController@update');
+Route::get('/search-product', 'App\Http\Controllers\ProductController@search');
+Route::get('/delete-product/{product_id}', 'App\Http\Controllers\ProductController@destroy');

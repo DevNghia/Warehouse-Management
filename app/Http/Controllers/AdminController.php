@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Admin;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -32,7 +33,8 @@ class AdminController extends Controller
     public function add_account()
     {
         AuthLogin();
-        return view('admin.account.add');
+        $roles = Role::all();
+        return view('admin.account.add')->with(compact('roles'));
     }
     public function store(Request $request)
     {
@@ -40,15 +42,19 @@ class AdminController extends Controller
 
         $admin = new Admin();
         $admin->admin_name = $data['admin_name'];
+        $admin->admin_email = $data['admin_email'];
+        $admin->admin_phone = $data['admin_phone'];
+        $admin->admin_password = bcrypt($data['admin_password']);
+        $admin->role_id = $data['role_id'];
         $admin->created_at = now();
-        $check = admin::where('admin_name', $data['admin_name'])->first();
+        $check = admin::where('admin_email', $data['admin_email'])->first();
         if ($check) {
-            session()->flash('warrning', 'Đơn vị tính đã tồn tại!');
+            session()->flash('warrning', 'Email đã tồn tại!');
             return Redirect::back();
         } else {
             $admin->save();
-            Session()->put('message', 'Thêm đơn vị tính thành công!');
-            return Redirect::to('/show-admin');
+            Session()->put('message', 'Thêm tài khoản thành công!');
+            return Redirect::to('/show-all-account');
         }
     }
     public function show_dashboard()

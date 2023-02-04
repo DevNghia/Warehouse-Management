@@ -22,6 +22,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- calendar -->
 <link rel="stylesheet" href="{{asset('css/monthly.css')}}">
 <!-- //calendar -->
+
 <!-- //font-awesome icons -->
 <script src="{{asset('js/jquery2.0.3.min.js')}}"></script>
 <script src="{{asset('js/raphael-min.js')}}"></script>
@@ -302,8 +303,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>sản phẩm</span>
                     </a>
                     <ul class="sub">
-						<li><a href="">Danh sách sản phẩm</a></li>
-						<li><a href="">Thêm mới sản phẩm</a></li>
+						<li><a href="{{url('/show-product')}}">Danh sách sản phẩm</a></li>
+						<li><a href="{{url('/add-product')}}">Thêm mới sản phẩm</a></li>
                     </ul>
                 </li>
                
@@ -455,8 +456,56 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script> 
 <script src="{{asset('js/validation.js')}}"></script>
 <script src="{{asset('js/sweetalert.all.js')}}"></script>
-
+@if (session('message'))
+<script>
+Swal.fire({
+title: "Lỗi",
+text: "{{ session('message') }}",
+icon: "error",
+});
+</script>
+@endif
 @include('sweetalert::alert')
+<script>
+   $(document).ready(function(){
+		$('.text-danger').click(function(){
+          var id = $(this).data('id_product_type');
+             var token = $("meta[name='csrf-token']").attr("content");
+            Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+      
+    	$.ajax({
+         url: '{{('delete-product-type/')}}'+id,
+        type: 'GET',
+        data: {
+            "_token": token,
+        },
+              	     success:function(){
+                       Swal.fire(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success', 
+    )
+                }
+            	});
+   window.setTimeout(function () {
+    location.reload();
+  }, 3000);
+  }
+})
+        });
+				
+});
+
+</script>
 	<!-- //calendar -->
 </body>
 </html>

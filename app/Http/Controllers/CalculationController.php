@@ -41,7 +41,7 @@ class CalculationController extends Controller
             return Redirect::back();
         } else {
             $calculation->save();
-            Session()->put('message', 'Thêm đơn vị tính thành công!');
+            alert()->success('Success', 'Thêm đơn vị tính thành công');
             return Redirect::to('/show-calculation');
         }
     }

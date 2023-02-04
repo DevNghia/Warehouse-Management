@@ -43,7 +43,7 @@ class SupplierController extends Controller
             return Redirect::back();
         } else {
             $supplier->save();
-            Session()->put('message', 'Thêm nhà cung cấp thành công!');
+            alert()->success('Success', 'Thêm nhà cung cấp thành công');
             return Redirect::to('/show-supplier');
         }
     }

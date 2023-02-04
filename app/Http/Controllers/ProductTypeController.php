@@ -45,7 +45,7 @@ class ProductTypeController extends Controller
             return Redirect::back();
         } else {
             $product_type->save();
-            Session()->put('message', 'Thêm loại sản phẩm phẩm thành công!');
+            alert()->success('Success', 'Thêm sản phẩm thành công');
             return Redirect::to('/show-product-type');
         }
 
@@ -71,7 +71,5 @@ class ProductTypeController extends Controller
     {
         $product_type = ProductType::find($product_type_id);
         $product_type->delete();
-        Session()->put('error', 'Xóa loại sản phẩm phẩm thành công!');
-        return Redirect::to('/show-product-type');
     }
 }
