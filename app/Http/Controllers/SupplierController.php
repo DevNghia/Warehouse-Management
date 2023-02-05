@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class SupplierController extends Controller
 {
@@ -36,6 +37,18 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->all();
+        $newSupplier = new Supplier;
+        $newSupplier->supplier_name = $data["supplier_name"];
+        $newSupplier->created_at = now();
+        $err = Supplier::where('supplier_name', $data["supplier_name"])->first();
+        if($err) {
+            session()->flash('warning', 'This Supplier is exist');
+            return Redirect::back();
+        }
+        $newSupplier->save();
+        Session()->put('message', 'Add successfully');
+        return Redirect::to('/show-supplier');
     }
 
     /**
@@ -55,9 +68,11 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function edit(Supplier $supplier)
+    public function edit($supplier_id)
     {
         //
+        $supplier = Supplier::where('supplier_id', $supplier_id)->first();
+        return view('admin.supplier.edit_supplier')->with(compact('product_type'));
     }
 
     /**
@@ -67,9 +82,14 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, $supplier_id)
     {
         //
+        $supplier = Supplier::find($supplier_id);
+        $supplier->updated_at = now();
+        $supplier->update($request->all());
+        Session()->put('Message', 'Update successfully');
+        return Redirect::to('/show-supplier');
     }
 
     /**
