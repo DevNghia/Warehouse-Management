@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('warehouses', function (Blueprint $table) {
-            $table->bigIncrements('warehouses_id');
-            $table->string('warehouses_name');
-            $table->string('warehouses_address');
+        Schema::create('nhapkhos', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('mapn');
+            $table->string('content');
+            $table->unsignedBigInteger('admin_id');
+            $table->foreign('admin_id')->references('admin_id')->on('admin')->onDelete('cascade');
+            $table->string('note');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('warehouses');
+        Schema::dropIfExists('nhapkhos');
     }
 };

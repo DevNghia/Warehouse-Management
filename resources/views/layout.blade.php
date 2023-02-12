@@ -308,26 +308,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </ul>
                 </li>
                
-                <li class="sub-menu">
-                    <a href="">
-                        <i class="fa fa-book"></i>
-                        <span>Kho</span>
-                    </a>
-                    <ul class="sub">
-						<li><a href="">Danh sách kho hàng</a></li>
-                        <li><a href="">Danh sách chuyển kho</a></li>
-						<li><a href="">Thêm mới kho hàng</a></li>
-                    </ul>
-                </li>
+              
                  <li class="sub-menu">
                     <a href="">
                         <i class="fa fa-book"></i>
                         <span>Quản lý nhập xuất</span>
                     </a>
                     <ul class="sub">
-						<li><a href="">Danh sách phiếu nhập</a></li>
-						<li><a href="">Danh sách phiếu xuất</a></li>
+						<li><a href="{{url('/show-phieunhap')}}">Danh sách phiếu nhập</a></li>
+						<li><a href="{{url('/show-phieuxuat')}}">Danh sách phiếu xuất</a></li>
                     </ul>
+                </li>
+                  <li class="sub-menu">
+                    <a href="{{url('/show-kho')}}">
+                        <i class="fa fa-book"></i>
+                        <span>Quản lý kho hàng</span>
+                    </a>
+                    
                 </li>
             <li class="sub-menu">
                     <a href="{{url('/show-all-account')}}">
@@ -507,5 +504,6 @@ icon: "error",
 
 </script>
 	<!-- //calendar -->
+       
 </body>
 </html>

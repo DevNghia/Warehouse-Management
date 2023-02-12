@@ -61,3 +61,17 @@ Route::get('/edit-product/{product_id}', 'App\Http\Controllers\ProductController
 Route::post('/update-product/{product_id}', 'App\Http\Controllers\ProductController@update');
 Route::get('/search-product', 'App\Http\Controllers\ProductController@search');
 Route::get('/delete-product/{product_id}', 'App\Http\Controllers\ProductController@destroy');
+//phieunhap
+Route::get('/show-phieunhap', 'App\Http\Controllers\NhapkhoController@show_all');
+Route::get('/add-phieunhap', 'App\Http\Controllers\NhapkhoController@add_phieunhap');
+Route::post('/phieunhap', 'App\Http\Controllers\NhapkhoController@store');
+Route::get('/search-phieunhap', 'App\Http\Controllers\NhapkhoController@search');
+Route::get('/show-detail/{mapn}', 'App\Http\Controllers\NhapkhoController@show_detail');
+//phieunhap
+Route::get('/show-phieuxuat', 'App\Http\Controllers\XuatkhoController@show_all');
+Route::get('/add-phieuxuat', 'App\Http\Controllers\XuatkhoController@add_phieuxuat');
+Route::post('/phieuxuat', 'App\Http\Controllers\XuatkhoController@store');
+Route::get('/search-phieuxuat', 'App\Http\Controllers\XuatkhoController@search');
+Route::get('/show-details/{mapx}', 'App\Http\Controllers\XuatkhoController@show_detail');
+//kho
+Route::get('/show-kho', 'App\Http\Controllers\WarehouseController@show_all');

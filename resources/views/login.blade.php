@@ -20,9 +20,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href="css/font-awesome.css" rel="stylesheet"> 
 <!-- //font-awesome icons -->
 <script src="js/jquery2.0.3.min.js"></script>
+{{-- <script>
+	function addmore(){
+		$('#add').append('<input type="text">')
+	}
+</script> --}}
 </head>
 <body>
+
 <div class="log-w3">
+
 <div class="w3layouts-main">
 	<h2>Đăng nhập</h2>
     @php

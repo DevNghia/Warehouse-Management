@@ -43,6 +43,7 @@
             <th>Loại sản phẩm</th>
             <th>Nhà cung cấp</th>
             <th>Người tạo</th>
+            <th>Đơn vị</th>
             <th>Giá nhập</th>
             <th>Giá bán lẻ</th>
             <th>Giá buôn</th>
@@ -57,8 +58,9 @@
             <td><span class="text-ellipsis">{{$item->product_name}}</span></td>
             <td><img src="/upload/product/{{$item->product_image}}"width="50px" alt=""></td>
             <td><span class="text-ellipsis">{{$item->product_types->product_type_name}}</span></td>
-            <td><span class="text-ellipsis">{{$item->calculations->calculation_name}}</span></td>
+            <td><span class="text-ellipsis">{{$item->suppliers->supplier_name}}</span></td>
             <td><span class="text-ellipsis">{{$item->admins->admin_name}}</span></td>
+            <td><span class="text-ellipsis">{{$item->calculations->calculation_name}}</span></td>
             <td><span class="text-ellipsis">{{$item->import_price}} vnđ</span></td> 
             <td><span class="text-ellipsis">{{$item->retail_price}} vnđ</span></td>
              <td><span class="text-ellipsis">{{$item->wholesale_price}} vnđ</span></td>

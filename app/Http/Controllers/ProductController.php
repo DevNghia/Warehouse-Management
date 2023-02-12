@@ -7,6 +7,7 @@ use App\Models\Calculation;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Product;
 use App\Models\ProductType;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -16,7 +17,7 @@ class ProductController extends Controller
 
         AuthLogin();
         $key = $request->keyword_submit;
-        $all_product = Product::with('calculations', 'product_types', 'admins')->paginate(4);
+        $all_product = Product::with('suppliers', 'product_types', 'admins', 'calculations')->paginate(4);
         if ($key = $request->keyword_submit) {
             $all_product = Product::where('product_name', 'like', '%' . $key . '%')->paginate(4);
         }
@@ -27,10 +28,11 @@ class ProductController extends Controller
     public function add_product()
     {
         AuthLogin();
-        $all_product = Product::with('calculations', 'product_types', 'admins')->get();
+        $all_product = Product::with('suppliers', 'product_types', 'admins', 'calculations')->get();
         $product_type = ProductType::all();
+        $supplier = Supplier::all();
         $calculation = Calculation::all();
-        return view('admin.product.add')->with(compact('all_product', 'product_type', 'calculation'));
+        return view('admin.product.add')->with(compact('all_product', 'product_type', 'supplier', 'calculation'));
     }
 
     public function store(Request $request)
@@ -40,8 +42,9 @@ class ProductController extends Controller
         $product = new Product;
         $product->product_name = $data['product_name'];
         $product->product_type_id = $data['product_type'];
+        $product->supplier_id = $data['supplier'];
+        $product->admin_id = Session()->get('admin_id');
         $product->calculation_id = $data['calculation'];
-        $product->admin_id = Session()->get('admin_id');;
         $product->import_price = $data['import_price'];
         $product->retail_price = $data['retail_price'];
         $product->wholesale_price = $data['wholesale_price'];

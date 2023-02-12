@@ -34,6 +34,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Nhà cùng cấp</label>
+                                     <select name="supplier" class="form-control input-sm m-bot15">
+                                    @foreach ($supplier as $item)
+                                        <option value="{{$item->supplier_id}}">{{$item->supplier_name}}</option>
+                                    @endforeach
+                                   </select>
+                                </div>
+                                 <div class="form-group">
+                                    <label>Đơn vị</label>
                                      <select name="calculation" class="form-control input-sm m-bot15">
                                     @foreach ($calculation as $item)
                                         <option value="{{$item->calculation_id}}">{{$item->calculation_name}}</option>
