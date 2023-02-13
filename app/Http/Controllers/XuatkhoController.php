@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\XuatkhoCT;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class XuatkhoController extends Controller
 {
@@ -56,14 +57,19 @@ class XuatkhoController extends Controller
         } else {
             if (is_array($request->product) || is_object($request->product)) {
                 foreach ($request->product as $key => $item) {
-
+                    $product = Product::find($estimatesAdd['product_id']  = $request->product[$key]);
                     $estimatesAdd['product_id']  = $request->product[$key];
                     $estimatesAdd['mapx']     = $data['mapx'];
                     $estimatesAdd['supplier_id']     = $request->supplier[$key];
                     $estimatesAdd['soluong']       = $request->soluong[$key];
                     $estimatesAdd['tongtien']             = ($request->soluong[$key]) * $gianhap->import_price;
-
-                    XuatkhoCT::create($estimatesAdd);
+                    if (($estimatesAdd['soluong'] = $request->soluong[$key]) > ($product->soluong)) {
+                        alert()->error('Error', 'Số lượng sản phẩm không đủ');
+                        return Redirect::to('/add-phieuxuat');
+                    } else {
+                        XuatkhoCT::create($estimatesAdd);
+                        DB::table('product')->where('product_id',   $estimatesAdd['product_id']  = $request->product[$key])->update(['soluong' => ($product->soluong) - ($estimatesAdd['soluong']  = $request->soluong[$key])]);
+                    }
                 }
             }
             $phieuxuatAdd->save();

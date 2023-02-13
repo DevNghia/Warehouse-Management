@@ -8,6 +8,7 @@ use App\Models\NhapkhoCT;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NhapkhoController extends Controller
 {
@@ -64,6 +65,8 @@ class NhapkhoController extends Controller
                     $estimatesAdd['tongtien']             = ($request->soluong[$key]) * $gianhap->import_price;
 
                     NhapkhoCT::create($estimatesAdd);
+                    $product = Product::find($estimatesAdd['product_id']  = $request->product[$key]);
+                    DB::table('product')->where('product_id',   $estimatesAdd['product_id']  = $request->product[$key])->update(['soluong' => ($estimatesAdd['soluong']  = $request->soluong[$key]) + $product->soluong]);
                 }
             }
             $phieunhapAdd->save();

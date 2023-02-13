@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Nhapkho;
 use App\Models\NhapkhoCT;
-
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -29,10 +29,11 @@ class WarehouseController extends Controller
         // $all_product = DB::table('nhapkho_c_t_s')
         //     ->join('xuatkho_c_t_s', 'nhapkho_c_t_s.product_id', '=', 'xuatkho_c_t_s.product_id')
         //     ->sum('nhapkho_c_t_s.soluong')->get();
-        $all_product = NhapkhoCT::select(DB::raw('nhapkho_c_t_s.*, SUM(nhapkho_c_t_s.soluong-xuatkho_c_t_s.soluong) as amount'))
-            ->leftJoin('xuatkho_c_t_s', 'xuatkho_c_t_s.product_id', '=', 'nhapkho_c_t_s.product_id')
-            ->groupBy('product_id')
-            ->get();
+        // $all_product = NhapkhoCT::select(DB::raw('nhapkho_c_t_s.*, SUM(nhapkho_c_t_s.soluong-xuatkho_c_t_s.soluong) as amount'))
+        //     ->leftJoin('xuatkho_c_t_s', 'xuatkho_c_t_s.product_id', '=', 'nhapkho_c_t_s.product_id')
+        //     ->groupBy('product_id')
+        //     ->get();
+        $all_product = Product::with('calculations')->get();
         return view('admin.kho.all')->with(compact('all_product'));
     }
 }

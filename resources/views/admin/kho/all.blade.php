@@ -41,8 +41,8 @@
             <th>ảnh</th>
             <th>Mã sản phẩm</th>
             <th>Tên sản phẩm</th>
-            {{-- <th>Đơn vị </th> --}}
-            <th>Số lượng</th>
+            <th>Đơn vị </th>
+            <th>Số lượng tồn</th>
         
           </tr>
         </thead>
@@ -54,10 +54,11 @@
           @foreach ($all_product as $item)
             <tr>
             <td>{{$i++}}</td>
-              <td><img src="/upload/product/{{$item->products->product_image}}"width="50px" alt=""></td>
+              <td><img src="/upload/product/{{$item->product_image}}"width="50px" alt=""></td>
                <td>{{$item->product_id}}</td>
-               <td><span class="text-ellipsis">{{$item->products->product_name}}</span></td>
-               <td><span class="text-ellipsis">{{($item->amount)}}</span></td>
+               <td><span class="text-ellipsis">{{$item->product_name}}</span></td>
+                        <td><span class="text-ellipsis">{{$item->calculations->calculation_name}}</span></td>
+               <td><span class="text-ellipsis">{{($item->soluong)}}</span></td>
               
           </tr>
           @endforeach

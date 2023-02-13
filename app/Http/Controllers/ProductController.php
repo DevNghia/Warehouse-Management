@@ -49,6 +49,8 @@ class ProductController extends Controller
         $product->retail_price = $data['retail_price'];
         $product->wholesale_price = $data['wholesale_price'];
         $product->status = $data['status'];
+        $product->soluong = 0;
+        $product->tongtien =  0;
         $product->created_at = now();
         $get_image = $request->file('product_image');
         if ($get_image) {
