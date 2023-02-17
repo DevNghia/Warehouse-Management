@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Xuatkho;
+use App\Exports\ExportPX;
 use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\XuatkhoCT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
+use Maatwebsite\Excel\Facades\Excel as FacadesExcel;
 
 class XuatkhoController extends Controller
 {
@@ -76,5 +80,9 @@ class XuatkhoController extends Controller
             alert()->success('Success', 'xuât hàng thành công');
             return Redirect::to('/show-phieuxuat');
         }
+    }
+    public function export_csv($mapx)
+    {
+        return FacadesExcel::download(new ExportPX($mapx), 'chitietphieuxuat.xlsx');
     }
 }

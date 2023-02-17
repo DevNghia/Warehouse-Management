@@ -69,7 +69,7 @@
                                 </div>
                                 <button type="submit" class="btn btn-info">Thêm mới</button>
                             </form>
-                            </div>
+                            
 
                         </div>
                     </section>

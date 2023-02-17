@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExcelExports;
+
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Nhapkho;
 use App\Models\NhapkhoCT;
@@ -9,6 +11,8 @@ use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
+use Maatwebsite\Excel\Facades\Excel as FacadesExcel;
 
 class NhapkhoController extends Controller
 {
@@ -73,5 +77,9 @@ class NhapkhoController extends Controller
             alert()->success('Success', 'Nhập hàng thành công');
             return Redirect::to('/show-phieunhap');
         }
+    }
+    public function export_csv($mapn)
+    {
+        return FacadesExcel::download(new ExcelExports($mapn), 'chitietphieunhap1.xlsx');
     }
 }

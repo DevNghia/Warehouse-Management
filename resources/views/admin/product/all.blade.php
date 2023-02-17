@@ -20,11 +20,16 @@
     }
     @endphp    
       </div>
-      <div class="col-sm-4">
-       
+       <div class="col-sm-9">
+        <form action="{{url('/import-product')}}" method="POST" enctype="multipart/form-data">
+          @csrf
+        <input type="file" name="file" accept=".xlsx"><br>
+       <input type="submit" value="Import Excel" name="import_csv" class="btn btn-warning">
+        </form>
       </div>
       <div class="col-sm-3">
         <div class="input-group">
+          
           <form action="" method="get">
           <input type="text" class="input-sm form-control" name="keyword_submit" placeholder="Search">
           <span class="input-group-btn">
