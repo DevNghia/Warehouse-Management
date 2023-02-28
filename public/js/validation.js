@@ -5,7 +5,7 @@ $("#formValidation").validate({
         product_type_name: {
             required: true,
 
-            minlength: 6,
+            minlength: 2,
         },
         note: {
             required: true,

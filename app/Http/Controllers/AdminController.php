@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Admin;
+use App\Models\Product;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -60,7 +61,10 @@ class AdminController extends Controller
     public function show_dashboard()
     {
         AuthLogin();
-        return view('admin.dashboard');
+        $nhap = DB::table("nhapkho_c_t_s")->sum('soluong');
+        $xuat = DB::table("xuatkho_c_t_s")->sum('soluong');
+        $product = DB::table("product")->sum('soluong');
+        return view('admin.dashboard')->with(compact('product', 'xuat', 'nhap'));
     }
     public function dashboard(Request $request)
     {
@@ -82,6 +86,20 @@ class AdminController extends Controller
             Session()->put('message', 'Mật khẩu hoặc tài khoản bị sai!.Làm ơn nhập lại!');
             return Redirect::to('/login');
         }
+    }
+    public function edit($admin_id)
+    {
+        $account = Admin::where('Admin_id', $admin_id)->first();
+        $roles = Role::all();
+        return view('admin.account.edit')->with(compact('account', 'roles'));
+    }
+    public function update(Request $request, $admin_id)
+    {
+        $admin = admin::find($admin_id);
+        $admin->updated_at = now();
+        $admin->update($request->all());
+        Session()->put('message', 'Cập nhật tài khoản thành công!');
+        return Redirect::to('/show-admin');
     }
     public function logout()
     {

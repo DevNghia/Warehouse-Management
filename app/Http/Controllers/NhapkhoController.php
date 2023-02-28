@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExcelExports;
+
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Nhapkho;
 use App\Models\NhapkhoCT;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use Maatwebsite\Excel\Facades\Excel as FacadesExcel;
 
 class NhapkhoController extends Controller
 {
@@ -63,12 +68,19 @@ class NhapkhoController extends Controller
                     $estimatesAdd['soluong']       = $request->soluong[$key];
                     $estimatesAdd['tongtien']             = ($request->soluong[$key]) * $gianhap->import_price;
 
+                    $estimatesAdd['created_at']   =  now();
                     NhapkhoCT::create($estimatesAdd);
+                    $product = Product::find($estimatesAdd['product_id']  = $request->product[$key]);
+                    DB::table('product')->where('product_id',   $estimatesAdd['product_id']  = $request->product[$key])->update(['soluong' => ($estimatesAdd['soluong']  = $request->soluong[$key]) + $product->soluong]);
                 }
             }
             $phieunhapAdd->save();
             alert()->success('Success', 'Nhập hàng thành công');
             return Redirect::to('/show-phieunhap');
         }
+    }
+    public function export_csv($mapn)
+    {
+        return FacadesExcel::download(new ExcelExports($mapn), 'chitietphieunhap1.xlsx');
     }
 }

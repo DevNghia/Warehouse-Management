@@ -29,6 +29,8 @@ return new class extends Migration
             $table->string('retail_price');
             $table->string('wholesale_price');
             $table->string('status');
+            $table->integer('soluong');
+            $table->integer('tongtien');
             $table->timestamps();
         });
     }

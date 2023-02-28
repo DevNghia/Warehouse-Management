@@ -48,7 +48,17 @@
             
           </tr>
           @endforeach
-            
+          {{-- <form action="{{url('/import-csv')}}" method="POST" enctype="multipart/form-data">
+          @csrf
+        <input type="file" name="file" accept=".xlsx"><br>
+       <input type="submit" value="Import CSV" name="import_csv" class="btn btn-warning">
+        </form> --}}
+
+             <form action="{{url('/export-csv')}}/{{$item->mapn}}" method="POST">
+          @csrf
+       <input type="submit" value="Xuất Excel" name="export_csv" class="btn btn-success">
+      </form>
+
           
         </tbody>
       </table>

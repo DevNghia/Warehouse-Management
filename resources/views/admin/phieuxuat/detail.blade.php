@@ -48,7 +48,10 @@
             
           </tr>
           @endforeach
-            
+               <form action="{{url('/export-px')}}/{{$item->mapx}}" method="POST">
+          @csrf
+       <input type="submit" value="Xuất Excel" name="export_csv" class="btn btn-success">
+      </form>
           
         </tbody>
       </table>

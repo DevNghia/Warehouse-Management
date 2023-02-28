@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
 use App\Models\Calculation;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use App\Imports\ExcelImports;
+use Maatwebsite\Excel\Facades\Excel as FacadesExcel;
 
 class ProductController extends Controller
 {
@@ -49,6 +50,8 @@ class ProductController extends Controller
         $product->retail_price = $data['retail_price'];
         $product->wholesale_price = $data['wholesale_price'];
         $product->status = $data['status'];
+        $product->soluong = 0;
+        $product->tongtien =  0;
         $product->created_at = now();
         $get_image = $request->file('product_image');
         if ($get_image) {
@@ -77,8 +80,8 @@ class ProductController extends Controller
     {
         $product = Product::where('product_id', $product_id)->first();
         $product_type = ProductType::all();
-        $calculation = Calculation::all();
-        return view('admin.product.edit')->with(compact('product', 'product_type', 'calculation'));
+        $supplier = Supplier::all();
+        return view('admin.product.edit')->with(compact('product', 'product_type', 'supplier'));
     }
     public function update(Request $request, $product_id)
     {
@@ -104,5 +107,11 @@ class ProductController extends Controller
     {
         $product = Product::find($product_id);
         $product->delete();
+    }
+    public function import_product(Request $request)
+    {
+        $path = $request->file('file')->getRealPath();
+        FacadesExcel::import(new ExcelImports, $path);
+        return back();
     }
 }

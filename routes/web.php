@@ -52,6 +52,8 @@ Route::group(['middleware' => 'roles'], function () {
     Route::get('/show-all-account', 'App\Http\Controllers\AdminController@show_all');
     Route::get('/add-account', 'App\Http\Controllers\AdminController@add_account');
     Route::post('/admin', 'App\Http\Controllers\AdminController@store');
+    Route::get('/edit-admin/{admin_id}', 'App\Http\Controllers\AdminController@edit');
+    Route::post('/update-account/{admin_id}', 'App\Http\Controllers\AdminController@update');
 });
 //product
 Route::get('/show-product', 'App\Http\Controllers\ProductController@show_all');
@@ -61,13 +63,14 @@ Route::get('/edit-product/{product_id}', 'App\Http\Controllers\ProductController
 Route::post('/update-product/{product_id}', 'App\Http\Controllers\ProductController@update');
 Route::get('/search-product', 'App\Http\Controllers\ProductController@search');
 Route::get('/delete-product/{product_id}', 'App\Http\Controllers\ProductController@destroy');
+Route::post('/import-product', 'App\Http\Controllers\ProductController@import_product');
 //phieunhap
 Route::get('/show-phieunhap', 'App\Http\Controllers\NhapkhoController@show_all');
 Route::get('/add-phieunhap', 'App\Http\Controllers\NhapkhoController@add_phieunhap');
 Route::post('/phieunhap', 'App\Http\Controllers\NhapkhoController@store');
 Route::get('/search-phieunhap', 'App\Http\Controllers\NhapkhoController@search');
 Route::get('/show-detail/{mapn}', 'App\Http\Controllers\NhapkhoController@show_detail');
-//phieunhap
+//phieuxuat
 Route::get('/show-phieuxuat', 'App\Http\Controllers\XuatkhoController@show_all');
 Route::get('/add-phieuxuat', 'App\Http\Controllers\XuatkhoController@add_phieuxuat');
 Route::post('/phieuxuat', 'App\Http\Controllers\XuatkhoController@store');
@@ -75,3 +78,11 @@ Route::get('/search-phieuxuat', 'App\Http\Controllers\XuatkhoController@search')
 Route::get('/show-details/{mapx}', 'App\Http\Controllers\XuatkhoController@show_detail');
 //kho
 Route::get('/show-kho', 'App\Http\Controllers\WarehouseController@show_all');
+Route::post('/filter-by-date', 'App\Http\Controllers\WarehouseController@filter_by_date');
+Route::post('/filter-by-date2', 'App\Http\Controllers\WarehouseController@filter_by_date2');
+Route::post('/30day', 'App\Http\Controllers\WarehouseController@days_nhap');
+Route::post('/30days', 'App\Http\Controllers\WarehouseController@days_xuat');
+//export excel
+Route::post('/export-csv/{mapn}', 'App\Http\Controllers\NhapkhoController@export_csv');
+Route::post('/export-px/{mapx}', 'App\Http\Controllers\XuatkhoController@export_csv');
+// Route::post('/import-csv', 'App\Http\Controllers\NhapkhoController@import_csv');

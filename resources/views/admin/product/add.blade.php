@@ -25,7 +25,7 @@
                                     <input type="file"  name="product_image" class="form-control" accept="image/*">
                                 </div>
                                 <div class="form-group">
-                                    <label>Loại sản phẩm</label>
+                                    <label>Vị trí</label>
                                      <select name="product_type" class="form-control input-sm m-bot15">
                                     @foreach ($product_type as $item)
                                         <option value="{{$item->product_type_id}}">{{$item->product_type_name}}</option>
@@ -69,7 +69,7 @@
                                 </div>
                                 <button type="submit" class="btn btn-info">Thêm mới</button>
                             </form>
-                            </div>
+                            
 
                         </div>
                     </section>

@@ -8,7 +8,7 @@ class NhapkhoCT extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-        'mapn', 'product_id', 'supplier_id', 'soluong', 'tongtien'
+        'mapn', 'product_id', 'supplier_id', 'soluong', 'tongtien', 'created_at'
     ];
     protected $table = 'nhapkho_c_t_s';
     public function admins()
