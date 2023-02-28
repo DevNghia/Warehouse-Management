@@ -26,7 +26,7 @@
                                        <img src="/upload/product/{{$product->product_image}}" width="100px" >
                                 </div>
                                 <div class="form-group">
-                                    <label>Loại sản phẩm</label>
+                                    <label>Vị trí</label>
                                      <select name="product_type" class="form-control input-sm m-bot15">
                                     @foreach ($product_type as $item)
                                         @if($item->product_type_id==$product->product_type_id)
@@ -40,11 +40,11 @@
                                 <div class="form-group">
                                     <label>Nhà cùng cấp</label>
                                      <select name="calculation" class="form-control input-sm m-bot15">
-                                    @foreach ($calculation as $item)
-                                       @if($item->calculation_id==$product->calculation_id)
-                                        <option selected value="{{$item->calculation_id}}">{{$item->calculation_name}}</option>
+                                    @foreach ($supplier as $item)
+                                       @if($item->supplier_id==$product->supplier_id)
+                                        <option selected value="{{$item->supplier_id}}">{{$item->supplier_name}}</option>
                                         @else
-                                         <option value="{{$item->calculation_id}}">{{$item->calculation_name}}</option>
+                                         <option value="{{$item->supplier_id}}">{{$item->supplier_name}}</option>
                                         @endif
                                     @endforeach
                                    </select>

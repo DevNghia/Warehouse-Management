@@ -9,7 +9,7 @@ class XuatkhoCT extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-        'mapx', 'product_id', 'supplier_id', 'soluong', 'tongtien'
+        'mapx', 'product_id', 'supplier_id', 'soluong', 'tongtien', 'created_at'
     ];
     protected $table = 'xuatkho_c_t_s';
     public function admins()

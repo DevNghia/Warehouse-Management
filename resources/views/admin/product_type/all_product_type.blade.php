@@ -3,7 +3,7 @@
         <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-     Loại sản phẩm
+     Vị Trí
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
@@ -38,9 +38,7 @@
         <thead>
           <tr>
             <th>STT</th>
-            <th>Mã loại sản phẩm</th>
-            <th>Loại sản phẩm</th>
-            <th>Nhà cung cấp</th>
+            <th>Tên vị trí</th>
             <th>Ngày Tạo</th>
             <th>Ngày cập nhật</th>
             <th style="width:30px;"></th>
@@ -53,9 +51,7 @@
           @foreach ($all_product_type as $item)
               <tr>
            <td>{{$i++}}</td>
-            <td>{{$item->product_type_id}}</td>
             <td><span class="text-ellipsis">{{$item->product_type_name}}</span></td>
-            <td><span class="text-ellipsis">Nhà cung cấp</span></td>
              <td><span class="text-ellipsis">{{$item->created_at}}</span></td>
               <td><span class="text-ellipsis">{{$item->updated_at}}</span></td>
             <td>

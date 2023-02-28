@@ -87,6 +87,20 @@ class AdminController extends Controller
             return Redirect::to('/login');
         }
     }
+    public function edit($admin_id)
+    {
+        $account = Admin::where('Admin_id', $admin_id)->first();
+        $roles = Role::all();
+        return view('admin.account.edit')->with(compact('account', 'roles'));
+    }
+    public function update(Request $request, $admin_id)
+    {
+        $admin = admin::find($admin_id);
+        $admin->updated_at = now();
+        $admin->update($request->all());
+        Session()->put('message', 'Cập nhật tài khoản thành công!');
+        return Redirect::to('/show-admin');
+    }
     public function logout()
     {
         Session()->put('admin_name', null);

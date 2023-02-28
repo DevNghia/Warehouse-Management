@@ -68,6 +68,7 @@ class NhapkhoController extends Controller
                     $estimatesAdd['soluong']       = $request->soluong[$key];
                     $estimatesAdd['tongtien']             = ($request->soluong[$key]) * $gianhap->import_price;
 
+                    $estimatesAdd['created_at']   =  now();
                     NhapkhoCT::create($estimatesAdd);
                     $product = Product::find($estimatesAdd['product_id']  = $request->product[$key]);
                     DB::table('product')->where('product_id',   $estimatesAdd['product_id']  = $request->product[$key])->update(['soluong' => ($estimatesAdd['soluong']  = $request->soluong[$key]) + $product->soluong]);

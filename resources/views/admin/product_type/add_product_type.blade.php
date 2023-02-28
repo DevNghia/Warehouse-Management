@@ -3,7 +3,7 @@
   <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            Thêm mới loại sản phẩm
+                            Thêm mới vị trí
                         </header>
                         <div class="panel-body">
                                @php
@@ -17,7 +17,7 @@
                                 <form action="{{url('/product-type')}}" id="formValidation" method="post" enctype="multipart/form-data">
                                     @csrf
                                 <div class="form-group">
-                                    <label>Tên loại sản phẩm</label>
+                                    <label>Tên vị trí</label>
                                     <input type="text" class="form-control" name="product_type_name" >
                                       <div class="form-group">
                                     <label>Ghi chú</label>

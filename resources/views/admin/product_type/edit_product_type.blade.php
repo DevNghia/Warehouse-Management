@@ -3,14 +3,14 @@
   <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            Cập nhật loại sản phẩm
+                            Cập nhật vị trí
                         </header>
                         <div class="panel-body">
                             <div class="position-center">
                                 <form action="{{url('/update-product-type')}}/{{$product_type->product_type_id}}" id="formValidation" method="post" enctype="multipart/form-data">
                                     @csrf
                                 <div class="form-group">
-                                    <label>Tên loại sản phẩm</label>
+                                    <label>Tên vị trí</label>
                                     <input type="text" class="form-control" value="{{$product_type->product_type_name}}" name="product_type_name" >
                                       <div class="form-group">
                                     <label>Ghi chú</label>

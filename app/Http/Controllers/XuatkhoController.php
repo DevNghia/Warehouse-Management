@@ -67,6 +67,7 @@ class XuatkhoController extends Controller
                     $estimatesAdd['supplier_id']     = $request->supplier[$key];
                     $estimatesAdd['soluong']       = $request->soluong[$key];
                     $estimatesAdd['tongtien']             = ($request->soluong[$key]) * $gianhap->import_price;
+                    $estimatesAdd['created_at']   =  now();
                     if (($estimatesAdd['soluong'] = $request->soluong[$key]) > ($product->soluong)) {
                         alert()->error('Error', 'Số lượng sản phẩm không đủ');
                         return Redirect::to('/add-phieuxuat');

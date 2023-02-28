@@ -80,8 +80,8 @@ class ProductController extends Controller
     {
         $product = Product::where('product_id', $product_id)->first();
         $product_type = ProductType::all();
-        $calculation = Calculation::all();
-        return view('admin.product.edit')->with(compact('product', 'product_type', 'calculation'));
+        $supplier = Supplier::all();
+        return view('admin.product.edit')->with(compact('product', 'product_type', 'supplier'));
     }
     public function update(Request $request, $product_id)
     {

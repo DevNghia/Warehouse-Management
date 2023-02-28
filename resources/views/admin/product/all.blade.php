@@ -45,7 +45,7 @@
             <th>Mã loại sản phẩm</th>
             <th>Tên</th>
             <th>Ảnh</th>
-            <th>Loại sản phẩm</th>
+            <th>Vị trí</th>
             <th>Nhà cung cấp</th>
             <th>Người tạo</th>
             <th>Đơn vị</th>
