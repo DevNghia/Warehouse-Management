@@ -132,7 +132,6 @@ use App\Models\Product;
             ->groupBy(DB::raw("supplier_id"))
             ->with('suppliers')
             ->get();
-		$chart_data[]= array();
         foreach ($get as $key => $val) {
             $chart_data[] = array(
                 'supplier' => $val->supplier_count,
@@ -142,13 +141,14 @@ use App\Models\Product;
             );
         }
 
-         $data = json_encode($chart_data);
+     $data = json_encode($chart_data);
+		 
 @endphp
 		<script>
 			    Morris.Donut({
   element: 'myfirstchart3',
   colors:['red','green'],
-  data: <?php echo $data; ?>
+  data:  <?php echo $data; ?>
 });
 		</script>
         @endsection

@@ -86,3 +86,6 @@ Route::post('/30days', 'App\Http\Controllers\WarehouseController@days_xuat');
 Route::post('/export-csv/{mapn}', 'App\Http\Controllers\NhapkhoController@export_csv');
 Route::post('/export-px/{mapx}', 'App\Http\Controllers\XuatkhoController@export_csv');
 // Route::post('/import-csv', 'App\Http\Controllers\NhapkhoController@import_csv');
+//export pdf
+Route::get('/exportpn-pdf/{checkout_code}', 'App\Http\Controllers\NhapkhoController@print_order');
+Route::get('/exportpx-pdf/{checkout_code}', 'App\Http\Controllers\XuatkhoController@print_order');

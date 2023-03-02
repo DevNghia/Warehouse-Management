@@ -11,6 +11,8 @@ use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\PDF;
+use Illuminate\Support\Facades\App;
 
 use Maatwebsite\Excel\Facades\Excel as FacadesExcel;
 
@@ -82,5 +84,81 @@ class NhapkhoController extends Controller
     public function export_csv($mapn)
     {
         return FacadesExcel::download(new ExcelExports($mapn), 'chitietphieunhap1.xlsx');
+    }
+    public function print_order($checkout_code)
+    {
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($this->print_order_convert($checkout_code));
+
+        return $pdf->stream();
+    }
+    public function print_order_convert($checkout_code)
+    {
+        $phieunhapct = NhapkhoCT::where('mapn', $checkout_code)->get();
+        $phieunhap = Nhapkho::where('mapn', $checkout_code)->first();
+        $get = NhapkhoCT::where('mapn', $checkout_code)->select("*", DB::raw("SUM(tongtien) as tong"))
+            ->groupBy(DB::raw("mapn"))
+            ->first();
+        $output = '';
+        $output .= '<style>body{
+			font-family: DejaVu Sans;
+		}
+        .abc{text-align:center}
+		.table-styling{
+			border:1px solid #000;
+		}
+		.table-styling tbody tr td{
+			border:1px solid #000;
+		}
+		</style>
+		<h2><center>Công ty TNHH một thành viên ABCD</center></h2>
+		<h4><center>Chi tiết phiếu nhập hàng</center></h4>
+		<p>Mã đơn hàng: ' . $phieunhap->mapn . ' </p>
+        <span>Người nhập hàng: ' . $phieunhap->admins->admin_name . ' </span><br> 
+        <span>Nội dung nhập hàng:' . $phieunhap->note . ' </span><br>
+        <span>Ngày tạo: ' . $phieunhap->created_at . '</span>
+        ';
+        $output .= '				
+				</tbody>
+			
+		<p>Đơn hàng đặt</p>
+			<table class="table-styling">
+				<thead>
+					<tr>
+						<th>STT</th>
+						<th>Tên sản phẩm</th>
+						<th>Nhà cung cấp</th>
+						<th>Số lượng</th>
+						<th>Đơn giá</th>
+						<th>Tổng tiền</th>
+					</tr>
+				</thead>
+                
+				<tbody>';
+        $i = 1;
+        foreach ($phieunhapct as $key => $product) {
+
+            $output .= '		
+					<tr>
+						<td>' . $i++ . '</td>
+						<td>' . $product->products->product_name . '</td>
+						<td>' . $product->suppliers->supplier_name . '</td>
+                        <td>' . $product->soluong . '</td>
+                        <td>' . number_format($product->products->import_price, 0, ',', '.') . 'đ' . '</td>
+                        <td>' . number_format($product->tongtien, 0, ',', '.') . 'đ' . '</td>
+						
+					</tr> 
+                    ';
+        }
+        $output .= '				
+				</tbody>
+			
+		</table>';
+        $output .= '
+            <span>Tổng giá trị nhập: ' . number_format($get->tong, 0, ',', '.') . 'đ' . ' </span><br>
+            <h3>Người nhập hóa đơn</h3>
+                <span>(Ký rõ họ tên)</span>
+        ';
+        return $output;
     }
 }

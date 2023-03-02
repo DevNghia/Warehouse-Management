@@ -43,7 +43,7 @@ class WarehouseController extends Controller
         $data = $request->all();
         $from_date = $data['from_date'];
         $to_date = $data['to_date'];
-        $get = NhapkhoCT::select("*", DB::raw("SUM(soluong) as user_count"))
+        $get = NhapkhoCT::whereBetween('created_at', [$from_date, $to_date])->select("*", DB::raw("SUM(soluong) as user_count"))
             ->groupBy(DB::raw("date(created_at)"))
             ->get();
 

@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\XuatkhoCT;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
 use Maatwebsite\Excel\Facades\Excel as FacadesExcel;
@@ -56,7 +57,7 @@ class XuatkhoController extends Controller
         $gianhap = Product::where('product_id', $request->product)->first();;
         $check = Xuatkho::where('mapx', $data['mapx'])->first();
         if ($check) {
-            alert()->error('Error', 'Mã phiếu nhập đã tồn tại');
+            alert()->error('Error', 'Mã phiếu xuất đã tồn tại');
             return Redirect::back();
         } else {
             if (is_array($request->product) || is_object($request->product)) {
@@ -85,5 +86,81 @@ class XuatkhoController extends Controller
     public function export_csv($mapx)
     {
         return FacadesExcel::download(new ExportPX($mapx), 'chitietphieuxuat.xlsx');
+    }
+    public function print_order($checkout_code)
+    {
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML($this->print_order_convert($checkout_code));
+
+        return $pdf->stream();
+    }
+    public function print_order_convert($checkout_code)
+    {
+        $phieunhapct = XuatKhoCT::where('mapx', $checkout_code)->get();
+        $phieunhap = XuatKho::where('mapx', $checkout_code)->first();
+        $get = XuatKhoCT::where('mapx', $checkout_code)->select("*", DB::raw("SUM(tongtien) as tong"))
+            ->groupBy(DB::raw("mapx"))
+            ->first();
+        $output = '';
+        $output .= '<style>body{
+			font-family: DejaVu Sans;
+		}
+        .abc{text-align:center}
+		.table-styling{
+			border:1px solid #000;
+		}
+		.table-styling tbody tr td{
+			border:1px solid #000;
+		}
+		</style>
+		<h2><center>Công ty TNHH một thành viên ABCD</center></h2>
+		<h4><center>Chi tiết phiếu xuất hàng</center></h4>
+		<p>Mã đơn hàng: ' . $phieunhap->mapx . ' </p>
+        <span>Người xuất hàng: ' . $phieunhap->admins->admin_name . ' </span><br> 
+        <span>Nội dung xuất hàng:' . $phieunhap->note . ' </span><br>
+        <span>Ngày tạo: ' . $phieunhap->created_at . '</span>
+        ';
+        $output .= '				
+				</tbody>
+			
+		<p>Đơn hàng đặt</p>
+			<table class="table-styling">
+				<thead>
+					<tr>
+						<th>STT</th>
+						<th>Tên sản phẩm</th>
+						<th>Nhà cung cấp</th>
+						<th>Số lượng</th>
+						<th>Đơn giá</th>
+						<th>Tổng tiền</th>
+					</tr>
+				</thead>
+                
+				<tbody>';
+        $i = 1;
+        foreach ($phieunhapct as $key => $product) {
+
+            $output .= '		
+					<tr>
+						<td>' . $i++ . '</td>
+						<td>' . $product->products->product_name . '</td>
+						<td>' . $product->suppliers->supplier_name . '</td>
+                        <td>' . $product->soluong . '</td>
+                        <td>' . number_format($product->products->import_price, 0, ',', '.') . 'đ' . '</td>
+                        <td>' . number_format($product->tongtien, 0, ',', '.') . 'đ' . '</td>
+						
+					</tr> 
+                    ';
+        }
+        $output .= '				
+				</tbody>
+			
+		</table>';
+        $output .= '
+            <span>Tổng giá trị xuất: ' . number_format($get->tong, 0, ',', '.') . 'đ' . ' </span><br>
+            <h3>Người xuất hóa đơn</h3>
+                <span>(Ký rõ họ tên)</span>
+        ';
+        return $output;
     }
 }

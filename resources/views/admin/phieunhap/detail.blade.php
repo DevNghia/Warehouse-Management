@@ -58,8 +58,10 @@
           @csrf
        <input type="submit" value="Xuất Excel" name="export_csv" class="btn btn-success">
       </form>
-
-          
+            <form action="{{url('/exportpn-pdf')}}/{{$item->mapn}}" method="GET">
+          @csrf
+       <input type="submit" value="Xuất PDF" name="exportpn_pdf" class="btn btn-warning">
+      </form>
         </tbody>
       </table>
     </div>
